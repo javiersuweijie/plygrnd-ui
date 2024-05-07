@@ -1,4 +1,172 @@
 <script>
-  export let data;
+	import * as Card from '$lib/components/ui/card/index.js';
+	import { Progress } from '$lib/components/ui/progress/index.js';
+  import { Button } from '$lib/components/ui/button/index.js';
+  import * as Table from "$lib/components/ui/table/index.js";
+  import { Badge } from "$lib/components/ui/badge/index.js";
+
+  import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
+
+	export let data;
 </script>
-<h1>Home</h1>
+
+<div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+  <h1 class="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Dashboard</h1>
+  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-2">
+	<Card.Root
+		data-x-chunk-name="dashboard-05-chunk-1"
+		data-x-chunk-description="A stats card showing this week's total sales in USD, the percentage difference from last week, and a progress bar."
+	>
+		<Card.Header class="pb-2">
+			<Card.Description>This Week</Card.Description>
+			<Card.Title class="text-4xl">$1329</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<div class="text-xs text-muted-foreground">+25% from last week</div>
+		</Card.Content>
+		<Card.Footer>
+			<Progress value={25} aria-label="25% increase" />
+		</Card.Footer>
+	</Card.Root>
+	<Card.Root
+		data-x-chunk-name="dashboard-05-chunk-2"
+		data-x-chunk-description="A stats card showing this month's total sales in USD, the percentage difference from last month, and a progress bar."
+	>
+		<Card.Header class="pb-2">
+			<Card.Description>This Month</Card.Description>
+			<Card.Title class="text-3xl">$5,329</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<div class="text-xs text-muted-foreground">+10% from last month</div>
+		</Card.Content>
+		<Card.Footer>
+			<Progress value={12} aria-label="12% increase" />
+		</Card.Footer>
+	</Card.Root>
+  </div>
+    <div class="grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
+      <Card.Root
+        class="xl:col-span-1"
+        data-x-chunk-name="dashboard-01-chunk-4"
+        data-x-chunk-description="A card showing a table of recent transactions with a link to view all transactions."
+      >
+        <Card.Header class="flex flex-row items-center">
+          <div class="grid gap-2">
+            <Card.Title>Transactions</Card.Title>
+            <Card.Description>Recent transactions from your store.</Card.Description>
+          </div>
+          <Button href="##" size="sm" class="ml-auto gap-1">
+            View All
+            <ArrowUpRight class="h-4 w-4" />
+          </Button>
+        </Card.Header>
+        <Card.Content>
+          <Table.Root>
+            <Table.Header>
+              <Table.Row>
+                <Table.Head>Customer</Table.Head>
+                <Table.Head class="xl:table.-column hidden">Type</Table.Head>
+                <Table.Head class="xl:table.-column hidden">Status</Table.Head>
+                <Table.Head class="xl:table.-column hidden">Date</Table.Head>
+                <Table.Head class="text-right">Amount</Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  <div class="font-medium">Liam Johnson</div>
+                  <div class="hidden text-sm text-muted-foreground md:inline">
+                    liam@example.com
+                  </div>
+                </Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">Sale</Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">
+                  <Badge class="text-xs" variant="outline">Approved</Badge>
+                </Table.Cell>
+                <Table.Cell
+                  class="md:table.-cell xl:table.-column hidden lg:hidden"
+                >
+                  2023-06-23
+                </Table.Cell>
+                <Table.Cell class="text-right">$250.00</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <div class="font-medium">Olivia Smith</div>
+                  <div class="hidden text-sm text-muted-foreground md:inline">
+                    olivia@example.com
+                  </div>
+                </Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">Refund</Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">
+                  <Badge class="text-xs" variant="outline">Declined</Badge>
+                </Table.Cell>
+                <Table.Cell
+                  class="md:table.-cell xl:table.-column hidden lg:hidden"
+                >
+                  2023-06-24
+                </Table.Cell>
+                <Table.Cell class="text-right">$150.00</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <div class="font-medium">Noah Williams</div>
+                  <div class="hidden text-sm text-muted-foreground md:inline">
+                    noah@example.com
+                  </div>
+                </Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">
+                  Subscription
+                </Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">
+                  <Badge class="text-xs" variant="outline">Approved</Badge>
+                </Table.Cell>
+                <Table.Cell
+                  class="md:table.-cell xl:table.-column hidden lg:hidden"
+                >
+                  2023-06-25
+                </Table.Cell>
+                <Table.Cell class="text-right">$350.00</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <div class="font-medium">Emma Brown</div>
+                  <div class="hidden text-sm text-muted-foreground md:inline">
+                    emma@example.com
+                  </div>
+                </Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">Sale</Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">
+                  <Badge class="text-xs" variant="outline">Approved</Badge>
+                </Table.Cell>
+                <Table.Cell
+                  class="md:table.-cell xl:table.-column hidden lg:hidden"
+                >
+                  2023-06-26
+                </Table.Cell>
+                <Table.Cell class="text-right">$450.00</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <div class="font-medium">Liam Johnson</div>
+                  <div class="hidden text-sm text-muted-foreground md:inline">
+                    liam@example.com
+                  </div>
+                </Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">Sale</Table.Cell>
+                <Table.Cell class="xl:table.-column hidden">
+                  <Badge class="text-xs" variant="outline">Approved</Badge>
+                </Table.Cell>
+                <Table.Cell
+                  class="md:table.-cell xl:table.-column hidden lg:hidden"
+                >
+                  2023-06-27
+                </Table.Cell>
+                <Table.Cell class="text-right">$550.00</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table.Root>
+        </Card.Content>
+      </Card.Root>
+  </div>
+</div>
