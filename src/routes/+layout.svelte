@@ -44,6 +44,9 @@
 			</span>
 			<a href="/" class="text-foreground transition-colors hover:text-foreground"> Home </a>
 			<a href="/explore" class="text-muted-foreground hover:text-foreground"> Explore </a>
+			<a href="/dashboard" class="text-muted-foreground hover:text-foreground"> Dashboard </a>
+			<a href="/explore" class="text-muted-foreground hover:text-foreground"> Datasets </a>
+			<a href="/explore" class="text-muted-foreground hover:text-foreground"> Community </a>
 		</nav>
 		<Sheet.Root>
 			<Sheet.Trigger asChild let:builder>
@@ -60,6 +63,8 @@
 					</a>
 					<a href="/" class="hover:text-foreground"> Home </a>
 					<a href="/explore" class="text-muted-foreground hover:text-foreground"> Explore </a>
+					<a href="/" class="text-muted-foreground hover:text-foreground"> Datasets </a>
+					<a href="/" class="text-muted-foreground hover:text-foreground"> Community </a>
 				</nav>
 			</Sheet.Content>
 		</Sheet.Root>
@@ -75,6 +80,7 @@
 				</div>
 			</form>
 			{#if session}
+			<div>$17.32</div>
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger asChild let:builder>
 					<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
@@ -84,8 +90,6 @@
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content align="end">
 					<DropdownMenu.Label>My Account</DropdownMenu.Label>
-					<DropdownMenu.Separator />
-					<DropdownMenu.Item>Settings</DropdownMenu.Item>
 					<DropdownMenu.Item>Support</DropdownMenu.Item>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item on:click={logout}>Logout</DropdownMenu.Item>
