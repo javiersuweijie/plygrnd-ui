@@ -1,8 +1,7 @@
 import { createBrowserClient, createServerClient, isBrowser, parse } from '@supabase/ssr'
-import { SUPABASE_KEY } from '$env/static/private';
 
 const PUBLIC_SUPABASE_URL = 'https://hmmouvlvvbflnflaboau.supabase.co';
-const PUBLIC_SUPABASE_ANON_KEY = SUPABASE_KEY
+const PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtbW91dmx2dmJmbG5mbGFib2F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ2MjU0NjIsImV4cCI6MjAzMDIwMTQ2Mn0._U5vmg9dV5M1-r80Q1OzyNkaWHy8lw42TEHkQjOieic';
 
 
 export const load = async ({ data, depends, fetch }) => {
