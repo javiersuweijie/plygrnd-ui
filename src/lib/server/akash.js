@@ -279,7 +279,7 @@ export async function createLease(deployment, wallet, client) {
         value: MsgCreateLease.fromPartial(lease)
     };
 
-    let gas = Math.floor(await client.simulate(accounts[0].address, [msg]) * 1.2);
+    let gas = Math.floor(await client.simulate(accounts[0].address, [msg]) * 1.5);
     const fee = {
         amount: [
             {
@@ -296,7 +296,8 @@ export async function createLease(deployment, wallet, client) {
     if (tx.code !== undefined && tx.code === 0) {
         return {
             id: bidId,
-            status: BID_OK
+            status: BID_OK,
+            price : bid.price
         };
     }
 

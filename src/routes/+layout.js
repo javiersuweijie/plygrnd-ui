@@ -48,7 +48,7 @@ export const load = async ({ data, depends, fetch }) => {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!data.balance) {
+  if (session && !data.balance) {
     const {data: balance} = await supabase.from('balances').select().eq('user_id', user.id).single();
     data.balance = balance;
   }

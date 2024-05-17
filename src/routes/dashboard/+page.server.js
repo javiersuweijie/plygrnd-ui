@@ -13,9 +13,9 @@ export const load = async ({ locals: { supabase, suberbaseAdmin, user }, url}) =
     console.log(error);
     let costs = 0;
     for (const launch of launches) {
-        if (launch.status === "RUNNING") {
+        if (["RUNNING", "LAUNCHING"].includes(launch.status)) {
             console.log(launch);
-            costs += launch.playgrounds.need_gpu ? 3.50 : 0.13;
+            costs += launch.cost_per_second * 60 * 60 * 24;
         }
     }
     return {

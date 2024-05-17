@@ -36,11 +36,14 @@ export async function POST({ request, locals: {supabase, user} }) {
     }
     console.log("lease", lease);
 
+    const fetchRes = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=akash-network&vs_currencies=usd").then(json);
+    const { usd } = fetchRes["akash-network"] || {usd: 5};
+    const cost_per_second = usd * lease.price.amount / 1000000 / 6;
 
     await sendManifest(sdl, lease, wallet, certificate);
     console.log("end")
 
-    let {data} = await supabase.from('launches').update({status: "LAUNCHING", provider: lease.id.provider}).eq('dseq', deployment.id.dseq).select();
+    let {data} = await supabase.from('launches').update({status: "LAUNCHING", provider: lease.id.provider, cost_per_second}).eq('dseq', deployment.id.dseq).select();
     console.log("launch updated to launching with provider", lease.id.provider, data);
 
     return json(data[0]);
