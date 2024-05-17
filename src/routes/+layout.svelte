@@ -4,9 +4,10 @@
 	import Package2 from 'lucide-svelte/icons/package-2';
 	import Search from 'lucide-svelte/icons/search';
 	import Star from 'lucide-svelte/icons/star';
+	import  CirclePlus  from 'lucide-svelte/icons/circle-plus';
 
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Card from '$lib/components/ui/card/index.js';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
@@ -14,9 +15,11 @@
 
 	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { loadStripe } from '@stripe/stripe-js';
 
 	export let data;
-	$: ({ session, supabase } = data);
+	$: ({ session, supabase} = data);
+	let balance = data.balance;
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -30,6 +33,37 @@
 
 	function logout() {
 		supabase.auth.signOut();
+	}
+
+	let paymentDialog = false;
+	let displayStripe = false;
+	let checkout;
+
+	async function openPaymentDialog() {
+		paymentDialog = true;
+		setTimeout(async () => {
+			const res = await fetch('/api/payment', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({})
+			});
+			const { clientSecret } = await res.json();
+			const stripe = await loadStripe("pk_test_51PHFI9FspKI3SJpm8MpJps4PrqQXjcfU1D6E28kgz4YhiWY9SL87bYFC2MwXxm8aFjIIQPabAnOAf6WELD0TumUg00WQyJh8ur");
+			checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+			// Mount Checkout
+			checkout.mount('#checkout');
+			displayStripe = true;
+		}, 100)
+	}
+
+	function onCloseDialog() {
+		paymentDialog = false;
+		displayStripe = false;
+		checkout.unmount('#checkout');
+		checkout.destroy();
+		checkout = null;
 	}
 </script>
 
@@ -80,8 +114,30 @@
 				</div>
 			</form>
 			{#if session}
-			<div>$17.32</div>
-			<DropdownMenu.Root>
+			<div class="flex flex-row justify-center items-center">
+				<div>
+					{#if !balance || balance.amount === 0}
+						Top up
+					{:else}
+						{balance.amount.toLocaleString('en-US', {
+							style: 'currency',
+							currency: 'USD',
+						})}
+					{/if}
+				  </div>
+				<button class="ml-2 hover:cursor-pointer" on:click={openPaymentDialog}>
+					<CirclePlus size="20"/>
+				</button>
+				<Dialog.Root open={paymentDialog} onOutsideClick={onCloseDialog}>
+					<Dialog.ContentWithoutClose class="flex flex-1 items-center justify-center">
+						{#if !displayStripe}
+							<div class="font-bold text-lg">Generating Payment Page...</div>
+						{/if}
+						<div id="checkout"></div>
+					</Dialog.ContentWithoutClose>
+				</Dialog.Root>
+			</div>
+			<DropdownMenu.Root >
 				<DropdownMenu.Trigger asChild let:builder>
 					<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
 						<CircleUser class="h-5 w-5" />

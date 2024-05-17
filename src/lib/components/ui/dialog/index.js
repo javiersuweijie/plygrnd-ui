@@ -5,6 +5,7 @@ import Footer from "./dialog-footer.svelte";
 import Header from "./dialog-header.svelte";
 import Overlay from "./dialog-overlay.svelte";
 import Content from "./dialog-content.svelte";
+import ContentWithoutClose from "./dialog-content-with-close.svelte";
 import Description from "./dialog-description.svelte";
 const Root = DialogPrimitive.Root;
 const Trigger = DialogPrimitive.Trigger;
@@ -18,6 +19,7 @@ export {
 	Trigger,
 	Overlay,
 	Content,
+	ContentWithoutClose,
 	Description,
 	Close,
 	//
@@ -29,6 +31,7 @@ export {
 	Trigger as DialogTrigger,
 	Overlay as DialogOverlay,
 	Content as DialogContent,
+	ContentWithoutClose as DialogContentWithoutClose,
 	Description as DialogDescription,
 	Close as DialogClose,
 };

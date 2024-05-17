@@ -1,6 +1,9 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js';
 import { redirect } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
+import { SUPABASE_ADMIN_KEY, STRIPE_SECRET } from '$env/static/private';
+import stripe from 'stripe';
 
 const PUBLIC_SUPABASE_URL = 'https://hmmouvlvvbflnflaboau.supabase.co';
 const PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtbW91dmx2dmJmbG5mbGFib2F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ2MjU0NjIsImV4cCI6MjAzMDIwMTQ2Mn0._U5vmg9dV5M1-r80Q1OzyNkaWHy8lw42TEHkQjOieic';
@@ -27,6 +30,8 @@ const supabase = async ({ event, resolve }) => {
       },
     },
   })
+
+  event.locals.supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_ADMIN_KEY);
 
   /**
    * Unlike `supabase.auth.getSession()`, which returns the session _without_
@@ -85,4 +90,9 @@ const authGuard = async ({ event, resolve }) => {
   return resolve(event)
 }
 
-export const handle = sequence(supabase, authGuard)
+const stripeInit = async ({ event, resolve }) => {
+  event.locals.stripe = stripe(STRIPE_SECRET);
+  return resolve(event)
+}
+
+export const handle = sequence(supabase, authGuard, stripeInit)

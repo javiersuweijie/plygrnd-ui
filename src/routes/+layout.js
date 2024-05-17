@@ -5,6 +5,7 @@ const PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 
 
 export const load = async ({ data, depends, fetch }) => {
+  console.log("balance in script", data.balance)
   /**
    * Declare a dependency so the layout can be invalidated, for example, on
    * session refresh.
@@ -47,5 +48,11 @@ export const load = async ({ data, depends, fetch }) => {
     data: { user },
   } = await supabase.auth.getUser()
 
-  return { session, supabase, user }
+  if (!data.balance) {
+    const {data: balance} = await supabase.from('balances').select().eq('user_id', user.id).single();
+    data.balance = balance;
+  }
+  console.log("balance in script 2", data.balance)
+
+  return { ...data, session, supabase, user }
 }

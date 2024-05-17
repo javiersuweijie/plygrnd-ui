@@ -1,4 +1,4 @@
-export const load = async ({ locals: { supabase, user } }) => {
+export const load = async ({ locals: { supabase, suberbaseAdmin, user }, url}) => {
     const { data: launches, error } = await supabase.from("launches")
         .select(`
            *,
