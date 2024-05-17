@@ -2,6 +2,8 @@
 
 Akash Playground is a community-driven marketplace, where users can upload, run, and monetize their AI models without worrying about the underlying infrastructure. This platform abstracts away the complexities of infrastructure management, allowing more users to access and utilize AI models for various use cases. The marketplace will be compatible with Hugging Face Spaces repositories, enabling seamless integration and collaboration.
 
+<img width="1276" alt="image" src="https://github.com/javiersuweijie/plygrnd-ui/assets/3447315/c4b30e9c-351c-4a57-9900-38c1ae5a6e35">
+
 ## Motivation
 
 The rapid development of AI models has led to a surge in innovative applications, but the lack of discoverability and ease of use hinders the growth of users in the AI ecosystem. Hugging Face Spaces has democratized the sharing and demonstration of AI models, but it doesn't provide a direct way for model builders to benefit from their work. Our platform addresses this gap by creating a marketplace that rewards model builders for their contributions.
